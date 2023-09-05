@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, RefreshControl } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Item from './Item';
 import GlobalStyles from "../../GlobalStyles";
+import Api from '../../api/Api';
 
 
 const Listing = ({ navigation }) => {
     const [postData, setPostData] = useState(null);
     const [loaded, setLoaded] = useState(false);
+    const [errLoad, setErrLoad] = useState(false);
     const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(1)
-    // const [sliced, setSliced] = useState();
+    const [totalPage, setTotalPage] = useState(1);    
 
-    const Api = async () => {
-        const option = {
-            method: 'GET',
-        }
-
-        const result = await fetch("https://jsonplaceholder.typicode.com/posts");
-        const data = await result.json();
-        console.log(data);
-        setPostData(data);
-        setTotalPage(Math.ceil(data.length / 6))
-        setLoaded(true);
-    }
 
     useEffect(() => {
-        Api();
+        Api.then((data) => {
+            setPostData(data);
+            setTotalPage(Math.ceil(data.length / 6))
+            setLoaded(true);
+        }).catch((err) => {
+            setErrLoad(true);
+        });
     }, [])
+
 
     const selectPage = (page_no) => {
         if (
@@ -40,25 +36,31 @@ const Listing = ({ navigation }) => {
         }
     }
 
+    
     return (
         <View style={styles.container}>
-            <Text style={[GlobalStyles.boldText, styles.heading]}>Items</Text>
+            {
+                errLoad ?
+                <Text style={[GlobalStyles.boldText, { marginTop: 80 }]}>Error in Loading Data</Text> : null
+            }
             {loaded ?
                 <>
                     <FlatList
                         data={postData.slice(page * 6 - 6, page * 6)}
+                        keyExtractor={(item) => item.id}
                         renderItem={({ item }) =>
                             <Item key={item.id}
                                 title={item.title}
                                 body={item.body}
                                 item={item}
                                 navigation={navigation}
-                            />}
-                        keyExtractor={(item) => item.id}
+                            />
+                        }                        
                         numColumns={2}
                         showsVerticalScrollIndicator={false}
                         style={[styles.flatlist]}
                     />
+
                     {
                         postData.length > 0 ?
                             <View style={[styles.pagination]}>
@@ -161,17 +163,17 @@ const Listing = ({ navigation }) => {
                                             </TouchableOpacity>
                                         </>
                                         :
-                                        {
-                                            // [...Array(Math.ceil(postData.length / 6))].map((_, index) => (
-                                            //     <TouchableOpacity
-                                            //         style={[styles.pageNumber, page === index + 1 ? { backgroundColor: "#4169E1" } : null]}
-                                            //         key={index}
-                                            //         onPress={() => { selectPage(index + 1) }}
-                                            //     >
-                                            //         <Text style={[GlobalStyles.boldText, page === index + 1 ? { color: "#fff" } : null]}>{index + 1}</Text>
-                                            //     </TouchableOpacity>
-                                            // ))
-                                        }
+
+                                        [...Array(Math.ceil(postData.length / 6))].map((_, index) => (
+                                            <TouchableOpacity
+                                                style={[styles.pageNumber, page === index + 1 ? { backgroundColor: "#4169E1" } : null]}
+                                                key={index}
+                                                onPress={() => { selectPage(index + 1) }}
+                                            >
+                                                <Text style={[GlobalStyles.boldText, page === index + 1 ? { color: "#fff" } : null]}>{index + 1}</Text>
+                                            </TouchableOpacity>
+                                        ))
+
 
 
                                 }
@@ -199,14 +201,6 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-    heading: {
-        color: '#fff',
-        backgroundColor: '#1E1F22',
-        width: '100%',
-        textAlign: 'center',
-        paddingVertical: 20,
-        fontSize: 20
-    },
     flatlist: {
         paddingVertical: 10,
         marginTop: 10,
@@ -216,6 +210,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom:30,
     },
     pageNumber: {
         backgroundColor: 'red',
@@ -226,6 +221,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginHorizontal: 5,
         borderRadius: 3,
-        elevation:2,
+        elevation: 2,
     }
 })

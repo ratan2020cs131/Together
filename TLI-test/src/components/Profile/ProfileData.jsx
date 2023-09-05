@@ -55,14 +55,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text: {
-        fontSize:18,
+        fontSize:15,
     },
 
     profile: { 
+        paddingHorizontal:20,
         flexDirection: 'row', 
         justifyContent: 'space-around', 
         width: '100%', 
         alignItems:'center', 
+        gap:20,
         marginTop:30,
     },
 
