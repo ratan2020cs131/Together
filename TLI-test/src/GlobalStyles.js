@@ -42,14 +42,6 @@ const GlobalStyles = StyleSheet.create({
         color:'#E9E5D7',
         fontFamily:"Montserrat-SemiBold",
     },
-
-    picker: {
-        height:40,
-        width:50,
-        borderWidth:1,
-        borderColor:'#E9E5D7',
-        borderRadius:10,
-    }
 });
 
 export default GlobalStyles;

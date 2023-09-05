@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../../GlobalStyles';
 import { Ionicons } from "@expo/vector-icons";
 
@@ -87,5 +87,4 @@ const styles = StyleSheet.create({
     body: {
         padding: 20,
     }
-
 });

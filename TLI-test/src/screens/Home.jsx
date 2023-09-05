@@ -6,16 +6,16 @@ import GlobalStyles from "../GlobalStyles";
 const Home = ({ navigation }) => {
   const [refresh, setRefresh] = useState(false);
 
-  const onRefresh = ()=>{
+  const onRefresh = () => {
     setRefresh(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       setRefresh(false);
-    },1000);
+    }, 1000);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     onRefresh();
-  },[])
+  }, [])
 
 
   return (
@@ -25,12 +25,12 @@ const Home = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ width: '100%', flexGrow: 1, alignItems: 'center', justifyContent: 'space-between', }}
         keyboardShouldPersistTaps="handled"
-      refreshControl={
+        refreshControl={
           <RefreshControl
             refreshing={refresh}
             onRefresh={onRefresh}
           />
-      } 
+        }
       >
         <Listing navigation={navigation} />
       </ScrollView>

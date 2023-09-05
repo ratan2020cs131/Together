@@ -10,6 +10,7 @@ const Tab = createBottomTabNavigator();
 
 const TabRoute = ({route}) => {
     const profileData = useRoute();
+    
     //routes array
     const routes = [
         {

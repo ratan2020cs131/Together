@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, RefreshControl } from "react-native";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Item from './Item';
 import GlobalStyles from "../../GlobalStyles";

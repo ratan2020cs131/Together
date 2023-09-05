@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
