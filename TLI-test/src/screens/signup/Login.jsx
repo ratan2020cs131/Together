@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
+import { Alert, View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
@@ -9,7 +9,9 @@ import LoginData from "../../../credentials/LoginInfo.json";
 const Login = ({ navigation }) => {
   const [wrongEmail, setWrongEmail] = useState(false);
   const [wrongPassword, setWrongPassword] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
+  const [name, setName] = useState(null);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -19,31 +21,36 @@ const Login = ({ navigation }) => {
     setUser({ ...user, [field]: value });
     setWrongPassword(false);
     setWrongEmail(false);
+    setLoginSuccess(false);
   };
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-
-  const loginHandler = ()=>{
+  var logindata = null;
+  const loginHandler = () => {
     let userExist = true;
-    let logindata=null;
-    LoginData.forEach((item)=>{
-      if(item.email===user.email){
-        userExist=false;
-        logindata=item;
-        console.log(logindata);
+    LoginData.forEach((item) => {
+      if (item.email === user.email) {
+        userExist = false;
+        logindata = item;
         return;
       }
     })
 
-    if(userExist){
+    if (userExist) {
       setWrongEmail(true);
-    }else{
-      if(logindata && logindata.password===user.password){
-        navigation.navigate("TabRoute", logindata);
+    } else {
+      if (logindata && logindata.password === user.password) {
+        // Alert.alert("Login Successful");
+        setName(logindata.name);
+        setLoginSuccess(true);
+        setTimeout(() => { 
+          setLoginSuccess(false);
+          navigation.navigate("TabRoute", logindata) 
+        }, 1000);
         console.log("logged in")
-      }else{
+      } else {
         setWrongPassword(true);
       }
 
@@ -57,7 +64,7 @@ const Login = ({ navigation }) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={[GlobalStyles.backgroundColor, styles.container]}>
-          <View style={{width:'100%', alignItems:'center'}}>
+          <View style={{ width: '100%', alignItems: 'center' }}>
             <Image source={Logo} style={[GlobalStyles.logo]}></Image>
             <View style={styles.form}>
 
@@ -92,11 +99,15 @@ const Login = ({ navigation }) => {
               </View>
               {
                 wrongPassword ?
-                <Text style={styles.wrongpass}>Wrong Password</Text> : null
+                  <Text style={styles.wrongpass}>Wrong Password</Text> : null
               }
               {
                 wrongEmail ?
-                <Text style={styles.wrongpass}>User not registered</Text> : null
+                  <Text style={styles.wrongpass}>User not registered</Text> : null
+              }
+              {
+                loginSuccess ?
+                    <Text style={[GlobalStyles.boldText, styles.loginSuccess]}>Login Successful...</Text> : null
               }
 
             </View>
@@ -157,11 +168,15 @@ const styles = StyleSheet.create({
   },
 
   wrongpass: {
-    color:"#F55E53",
+    color: "#F55E53",
   },
 
   button: {
     marginBottom: 70,
+  },
+
+  loginSuccess : {
+    color:'#55B938'
   }
 
 });
