@@ -2,11 +2,13 @@ import { StyleSheet } from 'react-native';
 
 const GlobalStyles = StyleSheet.create({
     boldText: {
-        fontFamily: "Montserrat-Bold",
+        fontFamily: "sans-serif",
+        fontWeight: "bold",
     },
 
     normalText: {
-        fontFamily: "Montserrat-Regular",
+        fontFamily: "sans-serif",
+        fontWeight:"normal",
     },
 
     logo: {
@@ -40,7 +42,9 @@ const GlobalStyles = StyleSheet.create({
         paddingHorizontal: 20,
         fontSize: 16,
         color: '#E9E5D7',
-        fontFamily: "Montserrat-SemiBold",
+        fontFamily: "sans-serif",
+        fontWeight: "bold",
+        letterSpacing:1,
     },
 });
 

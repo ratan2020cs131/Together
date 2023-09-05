@@ -11,7 +11,7 @@ const Listing = ({ navigation }) => {
     const [loaded, setLoaded] = useState(false);
     const [errLoad, setErrLoad] = useState(false);
     const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(1);    
+    const [totalPage, setTotalPage] = useState(1);
 
 
     useEffect(() => {
@@ -35,30 +35,27 @@ const Listing = ({ navigation }) => {
         }
     }
 
-    
+
     return (
         <View style={styles.container}>
             {
                 errLoad ?
-                <Text style={[GlobalStyles.boldText, { marginTop: 80 }]}>Error in Loading Data</Text> : null
+                    <Text style={[GlobalStyles.boldText, { marginTop: 80 }]}>Error in Loading Data</Text> : null
             }
             {loaded ?
                 <>
-                    <FlatList
-                        data={postData.slice(page * 6 - 6, page * 6)}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) =>
-                            <Item key={item.id}
-                                title={item.title}
-                                body={item.body}
-                                item={item}
-                                navigation={navigation}
-                            />
-                        }                        
-                        numColumns={2}
-                        showsVerticalScrollIndicator={false}
-                        style={[styles.flatlist]}
-                    />
+                    <View style={[styles.tiles]}>
+                        {
+                            postData.slice(page * 6 - 6, page * 6).map((item) => (
+                                <Item key={item.id}
+                                    title={item.title}
+                                    body={item.body}
+                                    item={item}
+                                    navigation={navigation}
+                                />
+                            ))
+                        }
+                    </View>
 
                     {
                         postData.length > 0 ?
@@ -70,8 +67,6 @@ const Listing = ({ navigation }) => {
                                     <Ionicons name="caret-back-outline"></Ionicons>
                                 </TouchableOpacity>
                                 {
-
-
                                     totalPage > 5 ?
                                         <>
                                             <TouchableOpacity
@@ -172,9 +167,6 @@ const Listing = ({ navigation }) => {
                                                 <Text style={[GlobalStyles.boldText, page === index + 1 ? { color: "#fff" } : null]}>{index + 1}</Text>
                                             </TouchableOpacity>
                                         ))
-
-
-
                                 }
                                 <TouchableOpacity
                                     style={[styles.pageNumber]}
@@ -200,16 +192,19 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-    flatlist: {
+    tiles: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
         paddingVertical: 10,
         marginTop: 10,
         marginBottom: 25,
+        justifyContent: 'center',
     },
     pagination: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom:30,
+        marginBottom: 30,
     },
     pageNumber: {
         backgroundColor: 'red',
