@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
-
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,7 +10,6 @@ const Login = ({ navigation }) => {
   const [wrongPassword, setWrongPassword] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
-  const [name, setName] = useState(null);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -42,14 +40,11 @@ const Login = ({ navigation }) => {
       setWrongEmail(true);
     } else {
       if (logindata && logindata.password === user.password) {
-        // Alert.alert("Login Successful");
-        setName(logindata.name);
         setLoginSuccess(true);
         setTimeout(() => { 
           setLoginSuccess(false);
           navigation.navigate("TabRoute", logindata) 
         }, 1000);
-        console.log("logged in")
       } else {
         setWrongPassword(true);
       }
