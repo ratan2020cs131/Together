@@ -4,7 +4,6 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvo
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
-import TextIcon from "./TextIcon";
 import LoginData from "../../../credentials/LoginInfo.json";
 
 const Login = ({ navigation }) => {
@@ -42,7 +41,7 @@ const Login = ({ navigation }) => {
       setWrongEmail(true);
     }else{
       if(logindata && logindata.password===user.password){
-        // navigation.navigate("Home");
+        navigation.navigate("TabRoute");
         console.log("logged in")
       }else{
         setWrongPassword(true);

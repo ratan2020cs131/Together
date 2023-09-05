@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../screens/signup/Login'
+import Login from '../screens/signup/Login';
+import TabRoute from './TabRoute';
 
 const Stack = createStackNavigator();
 
@@ -11,6 +12,11 @@ const StackRoute = () => {
         {
             path:"Login",
             component: Login,
+            option : { headerShown:false }
+        },
+        {
+            path:"TabRoute",
+            component: TabRoute,
             option : { headerShown:false }
         },
     ];
