@@ -41,7 +41,7 @@ const Login = ({ navigation }) => {
       setWrongEmail(true);
     }else{
       if(logindata && logindata.password===user.password){
-        navigation.navigate("TabRoute");
+        navigation.navigate("TabRoute", logindata);
         console.log("logged in")
       }else{
         setWrongPassword(true);
