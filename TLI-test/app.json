@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "tli-test",
-    "slug": "tli-test",
+    "name": "Test",
+    "slug": "Test",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/appLogo.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,13 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/appLogo.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#1E1F22"
       },
-      "package": "app.tli.test"
+      "package": "com.test.app"
     },
     "web": {
-      "favicon": "./assets/appLogo.png"
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e6b47de6-1fcd-4b6b-9f66-03f7f6993eae"
+      }
     }
   }
 }

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import StackRoute from './src/navigator/StackRoute';
 
 export default function App() {
