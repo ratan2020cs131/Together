@@ -4,7 +4,7 @@
     "slug": "Test",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/expo-icon.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,13 +19,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/expo-icon.jpg",
         "backgroundColor": "#1E1F22"
       },
       "package": "com.test.app"
     },
     "web": {
-      "favicon": "./assets/icon.png"
+      "favicon": "./assets/expo-icon.jpg"
     },
     "extra": {
       "eas": {

@@ -1,29 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, RefreshControl, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Item from './Item';
 import GlobalStyles from "../../GlobalStyles";
 import Api from '../../api/Api';
 
 
-const Listing = ({ navigation }) => {
-    const [postData, setPostData] = useState(null);
-    const [loaded, setLoaded] = useState(false);
-    const [errLoad, setErrLoad] = useState(false);
+const Listing = ({ navigation, postData, loaded, errLoad, totalPage }) => {
     const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(1);
-
-
-    useEffect(() => {
-        Api.then((data) => {
-            setPostData(data);
-            setTotalPage(Math.ceil(data.length / 6))
-            setLoaded(true);
-        }).catch((err) => {
-            setErrLoad(true);
-        });
-    }, [])
-
 
     const selectPage = (page_no) => {
         if (
@@ -35,7 +19,6 @@ const Listing = ({ navigation }) => {
         }
     }
 
-
     return (
         <View style={styles.container}>
             {
@@ -46,7 +29,7 @@ const Listing = ({ navigation }) => {
                 <>
                     <View style={[styles.tiles]}>
                         {
-                            postData.slice(page * 6 - 6, page * 6).map((item) => (
+                            postData && postData.slice(page * 6 - 6, page * 6).map((item) => (
                                 <Item key={item.id}
                                     title={item.title}
                                     body={item.body}
@@ -58,14 +41,17 @@ const Listing = ({ navigation }) => {
                     </View>
 
                     {
-                        postData.length > 0 ?
+                        postData && postData.length > 0 ?
                             <View style={[styles.pagination]}>
-                                <TouchableOpacity
-                                    style={[styles.pageNumber]}
-                                    onPress={() => { selectPage(page - 1) }}
-                                >
-                                    <Ionicons name="caret-back-outline"></Ionicons>
-                                </TouchableOpacity>
+                                {page !== 1 ?
+                                    <TouchableOpacity
+                                        style={[styles.pageNumber]}
+                                        onPress={() => { selectPage(page - 1) }}
+                                    >
+                                        <Ionicons name="caret-back-outline"></Ionicons>
+                                    </TouchableOpacity> :
+                                    null
+                                }
                                 {
                                     totalPage > 5 ?
                                         <>
@@ -168,12 +154,14 @@ const Listing = ({ navigation }) => {
                                             </TouchableOpacity>
                                         ))
                                 }
-                                <TouchableOpacity
-                                    style={[styles.pageNumber]}
-                                    onPress={() => { selectPage(page + 1) }}
-                                >
-                                    <Ionicons name="caret-forward-outline"></Ionicons>
-                                </TouchableOpacity>
+                                {page === totalPage ? null :
+                                    <TouchableOpacity
+                                        style={[styles.pageNumber]}
+                                        onPress={() => { selectPage(page + 1) }}
+                                    >
+                                        <Ionicons name="caret-forward-outline"></Ionicons>
+                                    </TouchableOpacity>
+                                }
                             </View> : null
                     }
                 </>

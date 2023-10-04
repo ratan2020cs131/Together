@@ -1,25 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, ScrollView, RefreshControl } from "react-native";
+import { StyleSheet, Text, ScrollView, RefreshControl, SafeAreaView } from "react-native";
 import Listing from '../components/Home/Listing';
 import GlobalStyles from "../GlobalStyles";
+import Api from '../api/Api';
 
 const Home = ({ navigation }) => {
-  const [refresh, setRefresh] = useState(false);
+  const [postData, setPostData] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+  const [errLoad, setErrLoad] = useState(false);
+  const [totalPage, setTotalPage] = useState(1);
+  const [refresh, setRefresh] = useState(true);
 
   const onRefresh = () => {
-    setRefresh(true);
-    setTimeout(() => {
+    setPostData([]);
+    setLoaded(false);
+    setTotalPage(1);
+
+    Api.then((data) => {
+      setPostData(data);
+      setTotalPage(Math.ceil(data.length / 6))
+      setLoaded(true);
       setRefresh(false);
-    }, 1000);
+    }).catch((err) => {
+      setErrLoad(true);
+    });
   }
 
   useEffect(() => {
     onRefresh();
   }, [])
 
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={[GlobalStyles.boldText, styles.heading]}>Items</Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -32,16 +44,15 @@ const Home = ({ navigation }) => {
           />
         }
       >
-        <Listing navigation={navigation} />
+        <Listing navigation={navigation} postData={postData} loaded={loaded} errLoad={errLoad} totalPage={totalPage} />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 25,
     width: '100%',
   },
   heading: {
