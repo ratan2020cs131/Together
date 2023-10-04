@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, } from "react-native";
+import { View, StyleSheet, } from "react-native";
 import ProfileData from '../components/Profile/ProfileData';
 import { useRoute } from '@react-navigation/native';
 
@@ -7,9 +7,9 @@ const Profile = ({ navigation }) => {
   const data = useRoute();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ProfileData data={data.params} navigation={navigation} />
-    </SafeAreaView>
+    </View>
   );
 };
 

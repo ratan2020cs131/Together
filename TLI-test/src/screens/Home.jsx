@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, ScrollView, RefreshControl, SafeAreaView } from "react-native";
+import { StyleSheet, Text, ScrollView, RefreshControl, View } from "react-native";
 import Listing from '../components/Home/Listing';
 import GlobalStyles from "../GlobalStyles";
 import Api from '../api/Api';
@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text style={[GlobalStyles.boldText, styles.heading]}>Items</Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -46,7 +46,7 @@ const Home = ({ navigation }) => {
       >
         <Listing navigation={navigation} postData={postData} loaded={loaded} errLoad={errLoad} totalPage={totalPage} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
